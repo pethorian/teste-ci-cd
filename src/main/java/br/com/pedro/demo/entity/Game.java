@@ -66,3 +66,5 @@ public class Game {
     @JoinColumn(name = "game_id")
     private List<Screenshot> screenshots;
 }
+
+// removo todos os comentários

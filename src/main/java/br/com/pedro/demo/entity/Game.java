@@ -67,8 +67,4 @@ public class Game {
     private List<Screenshot> screenshots;
 }
 
-// comentario
-
-// outro outro comentario
-// outro comentari
-// faz qualquer outra coisa
+// removo todos os comentários

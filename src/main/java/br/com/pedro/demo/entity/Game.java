@@ -66,5 +66,3 @@ public class Game {
     @JoinColumn(name = "game_id")
     private List<Screenshot> screenshots;
 }
-
-// adiciona comentário

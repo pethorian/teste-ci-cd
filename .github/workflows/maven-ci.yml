@@ -1,0 +1,47 @@
+name: Java CI with Maven
+
+# Dispara o CI apenas quando houver push (PRs já vêm de um push anterior)
+on:
+  push:
+    branches: [ "**" ]
+
+# Evita que múltiplos builds rodem para a mesma branch simultaneamente
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Job que será executado
+jobs:
+  build:
+    name: Builda e Testa
+    runs-on: ubuntu-latest
+
+    # Passos que serão executados
+    steps:
+    - name: Checkout code
+      # Faz o checkout do código
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      # Configura o JDK 21 para ser usado no build
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Make mvnw executable
+      # Dá permissão de execução para o Maven Wrapper (necessário para rodar em Linux)
+      run: chmod +x mvnw
+
+    - name: Build with Maven
+      # Compila o projeto
+      run: ./mvnw -B verify
+
+    - name: Upload Build Artifact
+      # Envia o artefato (JAR) para o GitHub Actions
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: demo-app-jar
+        path: target/*.jar
